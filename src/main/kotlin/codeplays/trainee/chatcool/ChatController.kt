@@ -13,10 +13,11 @@ class ChatController(
 ) {
 
     @MessageMapping("/send")
-    fun send(@Payload message: Any) {
-        println(ObjectMapper().writeValueAsString(message))
-        template.convertAndSend("/topic/messages", ObjectMapper().writeValueAsString(message),
-            mutableMapOf("content-type" to "application/json" as Any)
-        )
+    fun send(@Payload message: String) { // PRECISA SER STRING
+        val payload = ObjectMapper().writeValueAsString(message)
+
+        println(payload)
+
+        template.convertAndSend("/topic/messages", payload)
     }
 }
